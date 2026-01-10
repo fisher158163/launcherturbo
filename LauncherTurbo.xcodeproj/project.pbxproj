@@ -11,7 +11,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D1B0B402E4CDE460083EEF9 /* LaunchNext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaunchNext.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D1B0B402E4CDE460083EEF9 /* LauncherTurbo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LauncherTurbo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		690FA1FB2E88822200948FA6 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		690FA1FC2E88822200948FA6 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A1E2B5C12F4A8A1B00F12345 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -28,9 +28,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0D1B0B422E4CDE460083EEF9 /* LaunchNext */ = {
+		0D1B0B422E4CDE460083EEF9 /* LauncherTurbo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LaunchNext;
+			path = LauncherTurbo;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -50,7 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				A1E2B5CB2F4A8A1B00F12345 /* Localizable.strings */,
-				0D1B0B422E4CDE460083EEF9 /* LaunchNext */,
+				0D1B0B422E4CDE460083EEF9 /* LauncherTurbo */,
 				0D1B0B412E4CDE460083EEF9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,7 +58,7 @@
 		0D1B0B412E4CDE460083EEF9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0D1B0B402E4CDE460083EEF9 /* LaunchNext.app */,
+				0D1B0B402E4CDE460083EEF9 /* LauncherTurbo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -66,9 +66,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0D1B0B3F2E4CDE460083EEF9 /* LaunchNext */ = {
+		0D1B0B3F2E4CDE460083EEF9 /* LauncherTurbo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0D1B0B4B2E4CDE480083EEF9 /* Build configuration list for PBXNativeTarget "LaunchNext" */;
+			buildConfigurationList = 0D1B0B4B2E4CDE480083EEF9 /* Build configuration list for PBXNativeTarget "LauncherTurbo" */;
 			buildPhases = (
 				0D1B0B3C2E4CDE460083EEF9 /* Sources */,
 				0D1B0B3D2E4CDE460083EEF9 /* Frameworks */,
@@ -80,13 +80,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				0D1B0B422E4CDE460083EEF9 /* LaunchNext */,
+				0D1B0B422E4CDE460083EEF9 /* LauncherTurbo */,
 			);
-			name = LaunchNext;
+			name = LauncherTurbo;
 			packageProductDependencies = (
 			);
-			productName = LaunchNext;
-			productReference = 0D1B0B402E4CDE460083EEF9 /* LaunchNext.app */;
+			productName = LauncherTurbo;
+			productReference = 0D1B0B402E4CDE460083EEF9 /* LauncherTurbo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -131,7 +131,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0D1B0B3F2E4CDE460083EEF9 /* LaunchNext */,
+				0D1B0B3F2E4CDE460083EEF9 /* LauncherTurbo */,
 			);
 		};
 /* End PBXProject section */
@@ -365,7 +365,7 @@
 				);
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.turbo.LauncherTurbo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = LauncherTurbo;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -403,7 +403,7 @@
 				);
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.turbo.LauncherTurbo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = LauncherTurbo;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -426,7 +426,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0D1B0B4B2E4CDE480083EEF9 /* Build configuration list for PBXNativeTarget "LaunchNext" */ = {
+		0D1B0B4B2E4CDE480083EEF9 /* Build configuration list for PBXNativeTarget "LauncherTurbo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0D1B0B4C2E4CDE480083EEF9 /* Debug */,

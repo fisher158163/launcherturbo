@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0D1B0B3F2E4CDE460083EEF9"
-               BuildableName = "LaunchNext.app"
-               BlueprintName = "LaunchNext"
-               ReferencedContainer = "container:LaunchNext.xcodeproj">
+               BuildableName = "LauncherTurbo.app"
+               BlueprintName = "LauncherTurbo"
+               ReferencedContainer = "container:LauncherTurbo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0D1B0B3F2E4CDE460083EEF9"
-            BuildableName = "LaunchNext.app"
-            BlueprintName = "LaunchNext"
-            ReferencedContainer = "container:LaunchNext.xcodeproj">
+            BuildableName = "LauncherTurbo.app"
+            BlueprintName = "LauncherTurbo"
+            ReferencedContainer = "container:LauncherTurbo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0D1B0B3F2E4CDE460083EEF9"
-            BuildableName = "LaunchNext.app"
-            BlueprintName = "LaunchNext"
-            ReferencedContainer = "container:LaunchNext.xcodeproj">
+            BuildableName = "LauncherTurbo.app"
+            BlueprintName = "LauncherTurbo"
+            ReferencedContainer = "container:LauncherTurbo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
