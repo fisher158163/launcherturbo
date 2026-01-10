@@ -1,0 +1,29 @@
+# Xcode
+*.xcuserstate
+xcuserdata/
+*.xcuserdatad
+
+# Build artifacts
+build/
+DerivedData/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Swift updater build artifacts
+UpdaterScripts/SwiftUpdater/.build/
+UpdaterScripts/SwiftUpdater/.build-*/
+
+# Archives
+*.xcarchive
+
+# Breakpoints
+*.xcbkptlist
+
+# Parallel sources
+parallel_version/
+
+# Local AI notes
+LaunchNext/AI/TODO.md

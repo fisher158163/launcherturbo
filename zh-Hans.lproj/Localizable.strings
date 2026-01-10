@@ -1,0 +1,2 @@
+/* 占位本地化，仅用于向系统声明简体中文支持 */
+"LAUNCHNEXT_PLACEHOLDER" = "zh-Hans";

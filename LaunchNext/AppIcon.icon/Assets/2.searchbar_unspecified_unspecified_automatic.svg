@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Generator: Apple Native CoreSVG 341-->
+<!DOCTYPE svg
+PUBLIC "-//W3C//DTD SVG 1.1//EN"
+       "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024">
+ <g/>
+ <g id="searchbar">
+  <path d="M281.392 192c-32.0685 0-58.6365 1.55676-84.2532 21.2065C174.099 230.867 160.348 258.819 160.348 288s13.7511 57.133 36.7905 74.7935C222.755 382.443 249.323 384 281.392 384h461.216c32.0684 0 58.6365-1.55676 84.2532-21.2065C849.901 345.133 863.652 317.181 863.652 288s-13.751-57.133-36.7905-74.7935C801.245 193.557 774.677 192 742.608 192H281.392z" opacity="0.3" style="opacity:0.3;"/>
+ </g>
+</svg>

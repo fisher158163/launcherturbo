@@ -1,0 +1,63 @@
+{
+  "fill-specializations" : [
+    {
+      "value" : "automatic"
+    },
+    {
+      "appearance" : "dark",
+      "value" : "automatic"
+    }
+  ],
+  "groups" : [
+    {
+      "blur-material" : null,
+      "layers" : [
+        {
+          "image-name" : "9.chiclet1_unspecified_unspecified_automatic.svg",
+          "name" : "9.chiclet1_unspecified_unspecified_automatic"
+        },
+        {
+          "image-name" : "8.chiclet2_unspecified_unspecified_automatic.svg",
+          "name" : "8.chiclet2_unspecified_unspecified_automatic"
+        },
+        {
+          "image-name" : "7.chiclet3_unspecified_unspecified_automatic.svg",
+          "name" : "7.chiclet3_unspecified_unspecified_automatic"
+        },
+        {
+          "image-name" : "6.chiclet4_unspecified_unspecified_automatic.svg",
+          "name" : "6.chiclet4_unspecified_unspecified_automatic"
+        },
+        {
+          "image-name" : "5.chiclet5_unspecified_unspecified_automatic.svg",
+          "name" : "5.chiclet5_unspecified_unspecified_automatic"
+        },
+        {
+          "image-name" : "4.chiclet6_unspecified_unspecified_automatic.svg",
+          "name" : "4.chiclet6_unspecified_unspecified_automatic"
+        },
+        {
+          "image-name" : "3.magnifier_unspecified_unspecified_automatic.svg",
+          "name" : "3.magnifier_unspecified_unspecified_automatic"
+        },
+        {
+          "image-name" : "2.searchbar_unspecified_unspecified_automatic.svg",
+          "name" : "2.searchbar_unspecified_unspecified_automatic"
+        }
+      ],
+      "lighting" : "individual",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared"
+  }
+}
