@@ -234,7 +234,7 @@ final class AppStore: ObservableObject {
            let style = BackgroundStyle(rawValue: raw) {
             return style
         }
-        return .glass
+        return .blur  // 默认高斯模糊
     }
 
     private static let defaultBackgroundMaskOpacity: Double = 0.1
