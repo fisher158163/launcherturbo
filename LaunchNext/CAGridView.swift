@@ -147,21 +147,33 @@ final class CAGridView: NSView, CALayerDelegate {
     }
 
     @objc private func displayLinkFired(_ link: CADisplayLink) {
-        // 计算实时帧率
+        // 只在动画时才更新
+        guard isScrollAnimating || isDraggingItem else {
+            // 空闲时重置帧计数
+            if frameCount > 0 {
+                frameCount = 0
+                lastFrameTime = 0
+            }
+            return
+        }
+
+        // 计算实时帧率（仅在动画时）
         let now = CFAbsoluteTimeGetCurrent()
         if lastFrameTime > 0 {
             let delta = now - lastFrameTime
             let instantFPS = 1.0 / delta
-            frameTimes.append(instantFPS)
-            if frameTimes.count > 60 {
+            // 使用滑动窗口平均，减少数组操作
+            if frameTimes.count >= 30 {
                 frameTimes.removeFirst()
             }
+            frameTimes.append(instantFPS)
             currentFPS = frameTimes.reduce(0, +) / Double(frameTimes.count)
         }
         lastFrameTime = now
 
         frameCount += 1
-        if frameCount % 120 == 0 {
+        // 每 60 帧输出一次（约 0.5 秒）
+        if frameCount % 60 == 0 {
             onFPSUpdate?(currentFPS)
             print("🎮 [CAGrid] Avg FPS: \(String(format: "%.1f", currentFPS))")
         }
@@ -175,17 +187,14 @@ final class CAGridView: NSView, CALayerDelegate {
     // MARK: - Scroll Animation
 
     private func updateScrollAnimation() {
-        // 苹果风格的平滑减速动画（类似 UIScrollView 的 decelerationRate）
-        let decelerationRate: CGFloat = 0.92  // 接近苹果的 .normal (0.998) 但更快收敛
-        let snapThreshold: CGFloat = 0.5
-
+        let snapThreshold: CGFloat = 0.3
         let diff = targetScrollOffset - scrollOffset
 
-        // 使用指数衰减而不是弹簧，避免抖动
+        // 使用更平滑的 ease-out 动画曲线
         if abs(diff) > snapThreshold {
-            // 平滑插值到目标位置
-            let interpolation: CGFloat = 0.15  // 每帧移动 15% 的距离
-            scrollOffset += diff * interpolation
+            // 根据距离动态调整速度，距离远时快，距离近时慢
+            let t: CGFloat = 0.18  // 基础插值系数
+            scrollOffset += diff * t
         } else {
             // 接近目标时直接对齐
             scrollOffset = targetScrollOffset
@@ -193,9 +202,10 @@ final class CAGridView: NSView, CALayerDelegate {
             isScrollAnimating = false
         }
 
-        // 更新页面容器位置
+        // 更新页面容器位置 - 使用最小开销的方式
         CATransaction.begin()
         CATransaction.setDisableActions(true)
+        CATransaction.setAnimationDuration(0)
         pageContainerLayer.transform = CATransform3DMakeTranslation(scrollOffset, 0, 0)
         CATransaction.commit()
     }
@@ -277,6 +287,9 @@ final class CAGridView: NSView, CALayerDelegate {
         let containerLayer = CALayer()
         containerLayer.masksToBounds = false
 
+        // 性能优化：异步绘制
+        containerLayer.drawsAsynchronously = true
+
         // 图标层
         let iconLayer = CALayer()
         iconLayer.name = "icon"
@@ -284,11 +297,16 @@ final class CAGridView: NSView, CALayerDelegate {
         iconLayer.contentsScale = NSScreen.main?.backingScaleFactor ?? 2.0
         iconLayer.masksToBounds = false
 
-        // 添加阴影
+        // 性能优化：启用栅格化缓存
+        iconLayer.shouldRasterize = true
+        iconLayer.rasterizationScale = NSScreen.main?.backingScaleFactor ?? 2.0
+        iconLayer.drawsAsynchronously = true
+
+        // 添加阴影 - 使用 shadowPath 优化性能
         iconLayer.shadowColor = NSColor.black.cgColor
         iconLayer.shadowOffset = CGSize(width: 0, height: -2)
-        iconLayer.shadowRadius = 8
-        iconLayer.shadowOpacity = 0.3
+        iconLayer.shadowRadius = 6  // 减小阴影半径
+        iconLayer.shadowOpacity = 0.25
 
         containerLayer.addSublayer(iconLayer)
 
@@ -301,12 +319,17 @@ final class CAGridView: NSView, CALayerDelegate {
         textLayer.alignmentMode = .center
         textLayer.truncationMode = .end
         textLayer.isWrapped = false
+
+        // 性能优化：栅格化文字层
+        textLayer.shouldRasterize = true
+        textLayer.rasterizationScale = NSScreen.main?.backingScaleFactor ?? 2.0
+
         // 使用白色文字 + 黑色描边/阴影确保可读性
         textLayer.foregroundColor = NSColor.white.cgColor
         textLayer.shadowColor = NSColor.black.cgColor
         textLayer.shadowOffset = CGSize(width: 0, height: -0.5)
-        textLayer.shadowRadius = 3
-        textLayer.shadowOpacity = 1.0
+        textLayer.shadowRadius = 2  // 减小阴影半径
+        textLayer.shadowOpacity = 0.8
 
         // 设置文字内容
         switch item {
@@ -465,7 +488,12 @@ final class CAGridView: NSView, CALayerDelegate {
                 if let iconLayer = containerLayer.sublayers?.first(where: { $0.name == "icon" }) {
                     let iconX = (cellWidth - actualIconSize) / 2
                     let iconY = labelHeight + labelTopSpacing  // 图标在上
-                    iconLayer.frame = CGRect(x: iconX, y: iconY, width: actualIconSize, height: actualIconSize)
+                    let iconFrame = CGRect(x: iconX, y: iconY, width: actualIconSize, height: actualIconSize)
+                    iconLayer.frame = iconFrame
+
+                    // 性能优化：设置 shadowPath 避免实时计算阴影
+                    let shadowRect = CGRect(x: 0, y: 0, width: actualIconSize, height: actualIconSize)
+                    iconLayer.shadowPath = CGPath(roundedRect: shadowRect, cornerWidth: actualIconSize * 0.2, cornerHeight: actualIconSize * 0.2, transform: nil)
                 }
 
                 if let textLayer = containerLayer.sublayers?.first(where: { $0.name == "label" }) as? CATextLayer {
@@ -561,10 +589,13 @@ final class CAGridView: NSView, CALayerDelegate {
 
             scrollOffset = newOffset
 
+            // 性能优化：使用 CATransaction 批量更新，并强制刷新
             CATransaction.begin()
             CATransaction.setDisableActions(true)
+            CATransaction.setAnimationDuration(0)
             pageContainerLayer.transform = CATransform3DMakeTranslation(scrollOffset, 0, 0)
             CATransaction.commit()
+            CATransaction.flush()  // 强制立即渲染
 
         case .ended, .cancelled:
             isDragging = false
