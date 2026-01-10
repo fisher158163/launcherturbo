@@ -526,6 +526,8 @@ struct LaunchpadView: View {
                                     appStore.openFolder = folder
                                 }
                             )
+                            // 强制在刷新触发器变化时重新渲染
+                            .id("\(appStore.gridRefreshTrigger)-\(appStore.folderUpdateTrigger)")
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .opacity(isFolderOpen ? 0.1 : 1)
                             .allowsHitTesting(!isFolderOpen)

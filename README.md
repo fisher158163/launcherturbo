@@ -209,7 +209,7 @@ We welcome contributions!
 ## Credits
 
 - Originally based on [LaunchNow](https://github.com/ggkevinnnn/LaunchNow) by ggkevinnnn
-- Forked from [LaunchNext](https://github.com/ggkevinnnn/LaunchNext)
+- Forked from [LaunchNext](https://github.com/RoversX/LaunchNext)
 - 120Hz Core Animation rendering engine rewritten with assistance from Claude Code
 - Thanks to the original authors for their excellent work!
 

@@ -608,10 +608,13 @@ final class CAGridView: NSView, CALayerDelegate {
                 dragStartPoint = location
 
                 // 启动长按计时器（用于开始拖拽）
+                // 注意：必须添加到 .common 模式，否则在鼠标追踪期间不会触发
                 longPressTimer?.invalidate()
-                longPressTimer = Timer.scheduledTimer(withTimeInterval: longPressDuration, repeats: false) { [weak self] _ in
+                let timer = Timer(timeInterval: longPressDuration, repeats: false) { [weak self] _ in
                     self?.startDragging(item: item, index: index, at: location)
                 }
+                RunLoop.main.add(timer, forMode: .common)
+                longPressTimer = timer
             }
         } else {
             // 点击空白区域，关闭窗口
@@ -622,10 +625,10 @@ final class CAGridView: NSView, CALayerDelegate {
     override func mouseDragged(with event: NSEvent) {
         let location = convert(event.locationInWindow, from: nil)
 
-        // 检查是否移动足够距离来开始拖拽
+        // 检查是否移动足够距离来开始拖拽（5像素即可）
         if !isDraggingItem, let idx = pressedIndex {
             let distance = hypot(location.x - dragStartPoint.x, location.y - dragStartPoint.y)
-            if distance > 10 {
+            if distance > 5 {
                 // 取消长按计时器，立即开始拖拽
                 longPressTimer?.invalidate()
                 longPressTimer = nil
@@ -928,6 +931,10 @@ struct CAGridViewRepresentable: NSViewRepresentable {
     var onOpenApp: ((AppInfo) -> Void)?
     var onOpenFolder: ((FolderInfo) -> Void)?
 
+    // 监听这些触发器来强制刷新
+    var gridRefreshTrigger: UUID { appStore.gridRefreshTrigger }
+    var folderUpdateTrigger: UUID { appStore.folderUpdateTrigger }
+
     func makeNSView(context: Context) -> CAGridView {
         let view = CAGridView(frame: .zero)
 
@@ -1008,8 +1015,17 @@ struct CAGridViewRepresentable: NSViewRepresentable {
             nsView.labelFontSize = CGFloat(appStore.iconLabelFontSize)
         }
 
-        // 更新 items - 总是检查并更新（使用传入的 items，支持搜索过滤）
-        if nsView.items.count != items.count || nsView.items.isEmpty || itemsChanged(nsView.items, items) {
+        // 检查刷新触发器是否变化（文件夹创建/修改会触发）
+        let triggerChanged = context.coordinator.lastGridRefreshTrigger != gridRefreshTrigger ||
+                             context.coordinator.lastFolderUpdateTrigger != folderUpdateTrigger
+
+        if triggerChanged {
+            context.coordinator.lastGridRefreshTrigger = gridRefreshTrigger
+            context.coordinator.lastFolderUpdateTrigger = folderUpdateTrigger
+            print("🔄 [CAGrid] Trigger changed, forcing refresh")
+            nsView.items = items
+        } else if itemsChanged(nsView.items, items) {
+            // 更新 items - 始终检查完整变化（包括文件夹名称等）
             print("🔄 [CAGrid] Updating items: \(nsView.items.count) -> \(items.count)")
             nsView.items = items
         }
@@ -1021,11 +1037,38 @@ struct CAGridViewRepresentable: NSViewRepresentable {
         }
     }
 
-    // 检查 items 是否变化（简单比较第一个和最后一个）
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    class Coordinator {
+        var lastGridRefreshTrigger: UUID = UUID()
+        var lastFolderUpdateTrigger: UUID = UUID()
+    }
+
+    // 检查 items 是否变化（完整比较所有 item 的 id 和名称）
     private func itemsChanged(_ old: [LaunchpadItem], _ new: [LaunchpadItem]) -> Bool {
         guard old.count == new.count else { return true }
-        guard !old.isEmpty else { return false }
-        return old.first?.id != new.first?.id || old.last?.id != new.last?.id
+        guard !old.isEmpty else { return !new.isEmpty }
+
+        // 完整比较每个 item
+        for i in 0..<old.count {
+            let oldItem = old[i]
+            let newItem = new[i]
+
+            // 比较 id
+            if oldItem.id != newItem.id { return true }
+
+            // 比较名称（文件夹改名后需要刷新）
+            if oldItem.name != newItem.name { return true }
+
+            // 对于文件夹，还要比较内部应用数量
+            if case .folder(let oldFolder) = oldItem, case .folder(let newFolder) = newItem {
+                if oldFolder.apps.count != newFolder.apps.count { return true }
+            }
+        }
+
+        return false
     }
 }
 

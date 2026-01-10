@@ -209,7 +209,7 @@ Core Animation 只需简单地变换预渲染的图层：
 ## 致谢
 
 - 最初基于 ggkevinnnn 的 [LaunchNow](https://github.com/ggkevinnnn/LaunchNow)
-- Fork 自 [LaunchNext](https://github.com/ggkevinnnn/LaunchNext)
+- Fork 自 [LaunchNext](https://github.com/RoversX/LaunchNext)
 - 120Hz Core Animation 渲染引擎在 Claude Code 协助下重写
 - 感谢原作者的出色工作！
 
