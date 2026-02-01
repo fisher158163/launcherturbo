@@ -134,11 +134,11 @@ LauncherTurbo (Core Animation)
                                          8.3ms/frame
 
 SwiftUI-based Alternatives
-████████████████                          40 FPS
+████████████████                         40 FPS
                                          25ms/frame
 
 Electron-based Apps
-████████                                  20 FPS
+████████                                 20 FPS
                                          50ms/frame
 ```
 
