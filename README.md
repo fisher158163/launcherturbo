@@ -162,14 +162,14 @@ Core Animation simply transforms pre-rendered layers:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                  LauncherTurbo                       │
+│                  LauncherTurbo                      │
 ├─────────────────────────────────────────────────────┤
 │  SwiftUI Shell (Settings, Search, Overlays)         │
 ├─────────────────────────────────────────────────────┤
 │  CAGridView - Core Animation Renderer               │
 │  ├─ CADisplayLink (120Hz sync)                      │
 │  ├─ CALayer Grid (GPU-composited icons)             │
-│  ├─ CATextLayer Labels (Retina text)               │
+│  ├─ CATextLayer Labels (Retina text)                │
 │  └─ Spring Animation Engine                         │
 ├─────────────────────────────────────────────────────┤
 │  AppStore - State Management                        │
